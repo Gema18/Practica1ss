@@ -477,7 +477,8 @@ Ahora para calcular el error es necesario restar la señal cuantificada a la rea
 if (length(x1) == length(xq)){
   error <- x1 - xq
   print(error)
-  plot(ts1, error)
+  ggplot()+ geom_line(aes(x = ts1, y = error))
+  
 }
   
 
