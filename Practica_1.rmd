@@ -164,13 +164,8 @@ ts1= seq(0,t,T1);
 ts2= seq(0,t,T2);
 x1 = cos(2*pi*f1*ts1); # nos piden sinusoides 
 x2 = cos(2*pi*f2*ts2);
-par(col="blue")
-plot(ts1,x1,type = "l")
-par(new=T)
-par(col="black")
-plot(ts2,x2,type = "l")
-####### HACER CON GGPLOT
-ggplot()+ geom_line(aes(x=ts2, y=x2))
+
+ggplot() + geom_line(aes(x=ts2, y=x2)) + geom_line(aes(x=ts1, y=x1), color = "blue")+ theme_classic()
 
 #Vuelve a representar las señales pero esta vez poniendo el eje X en segundos
 
