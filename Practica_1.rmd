@@ -475,13 +475,14 @@ En cambio, si elegimos 16 bytes como argumento de la funcion, la señal queda ma
 
 Ahora para calcular el error es necesario restar la señal cuantificada a la real: 
 ```{r}
+
 if (length(x1) == length(xq)){
   error <- x1 - xq
   print(error)
   ggplot() + geom_line(aes(x = ts1, y = error))
   
 }
-  
+
 ```
 
 
