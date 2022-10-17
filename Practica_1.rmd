@@ -475,15 +475,33 @@ Repite el proceso cuantificando la señal a 8, 4, 3 y 2 bits (utiliza como valor
 
 
 ```{r}
-# y = readWave("p44100.wav")
-# 
-# x8 = quanti(y, 8, max(y))
-# 
-# x4 = quanti(y, 4, max(y))
-# 
-# x3 = quanti(y, 3, max(y))
-# 
-# x2 = quanti(y, 2, max(y))
+y = readWave("p44100.wav")
+y1 = y
+
+
+x8 = quanti(y@left, 8, max((abs(y@left))))
+
+y1@left = x8
+
+savewav(wave=y1, f=44100,filename = "x8.wav", rescale = NULL)
+
+
+
+x4 = quanti(y@left, 4, max((abs(y@left))))
+y1@left = x4
+
+savewav(wave=y1, f=44100,filename = "x4.wav", rescale = NULL)
+
+x3 = quanti(y@left, 3, max((abs(y@left))))
+y1@left = x3
+
+savewav(wave=y1, f=44100,filename = "x3.wav", rescale = NULL)
+
+x2 = quanti(y@left, 2, max((abs(y@left))))
+y1@left = x2
+
+savewav(wave=y1, f=44100,filename = "x2.wav", rescale = NULL)
+
 
 ```
 
