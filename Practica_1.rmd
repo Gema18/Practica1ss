@@ -478,16 +478,12 @@ Ahora para calcular el error es necesario restar la señal cuantificada a la rea
 
 if (length(x1) == length(xq)){
   error <- x1 - xq
-  print(error)
-  ggplot() + geom_line(aes(x = ts1, y = error))
+  ggplot() + geom_line(aes(x = ts1, y = error), color = "red", alpha = 0.2) + geom_point(aes(x = ts1, y = error), shape = 15) + 
+  xlab("Señal")+ ylab("Error")+ ggtitle("Representación del error con 16 bytes")+ theme_classic()
   
 }
 
 ```
-
-
-
-
 
 2. Efecto de la _cuantificación sobre una señal de audio_. Para ello vamos a utilizar el fichero p44100.wav. Lee dicho fichero con la instrucción y = readWave("p44100.wav") y escucha su contenido con play("p44100.wav. 
 
