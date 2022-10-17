@@ -453,6 +453,10 @@ quanti <- function(data, N, m){
 xq = quanti(x1,2,5)
 plot(ts1,xq)
 
+ggplot() 
++geom_point(size = 4, aes(color=Species, shape = Species)) + geom_line()
+
+
 #Numero de bytes 4
 xq = quanti(x1,4,5)
 plot(ts1,xq)
@@ -470,8 +474,12 @@ En cambio, si elegimos 16 bytes como argumento de la funcion, la señal queda ma
 
 Ahora para calcular el error es necesario restar la señal cuantificada a la real: 
 ```{r}
-
-Error: 
+if (length(x1) == length(xq)){
+  error <- x1 - xq
+  print(error)
+  plot(ts1, error)
+}
+  
 
 ```
 
