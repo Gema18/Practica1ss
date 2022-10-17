@@ -449,16 +449,32 @@ quanti <- function(data, N, m){
   return(dataout)
 }
 
-
-
-xq = quanti(x1,4,5)
-
+#Numero de bytes 2
+xq = quanti(x1,2,5)
 plot(ts1,xq)
 
+#Numero de bytes 4
+xq = quanti(x1,4,5)
+plot(ts1,xq)
 
-
-#la señal cuantificada menos la real 
 ```
+Vemos que si le pasamos a la funcion quanti como numero de bytes 4, no dibuja la señal completa, es decir va perdiendo definicion puesto que esta nueva señal cuantificada redondeará a la baja y se perderán muchos valores. 
+
+```{r}
+xq = quanti(x1,16,5)
+plot(ts1,xq)
+
+```
+En cambio, si elegimos 16 bytes como argumento de la funcion, la señal queda mas definida y se pierden menos puntos ya que el espacio queda dividido en mas segmentos por lo tanto la señal cuantificada, cuando redondee, redondeará hacia un numero mas cercano al real. 
+
+
+Ahora para calcular el error es necesario restar la señal cuantificada a la real: 
+```{r}
+
+Error: 
+
+```
+
 
 
 
