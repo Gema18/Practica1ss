@@ -474,15 +474,34 @@ Ahora para calcular el error es necesario restar la señal cuantificada a la rea
 if (length(x1) == length(xq)){
   error <- x1 - xq
   ggplot() + geom_line(aes(x = ts1, y = error), color = "red", alpha = 0.2) + geom_point(aes(x = ts1, y = error), shape = 15) + 
-  xlab("Señal")+ ylab("Error")+ ggtitle("Representación del error con 16 bytes")+ theme_classic()
+  xlab("ts1")+ ylab("erro")+ ggtitle("Representación del error con 16 bytes")+ theme_classic()
   
 }
 
 ```
 
-2. Efecto de la _cuantificación sobre una señal de audio_. Para ello vamos a utilizar el fichero p44100.wav. Lee dicho fichero con la instrucción y = readWave("p44100.wav") y escucha su contenido con play("p44100.wav. 
+Como podemos observar, esta es la representacion del error en cada punto cuando la señal cuantficada esta con 16 bytes.
+
+
+2. Efecto de la _cuantificación sobre una señal de audio_. Para ello vamos a utilizar el fichero p44100.wav. Lee dicho fichero con la instrucción y = readWave("p44100.wav") y escucha su contenido con play("p44100.wav) 
 
 Repite el proceso cuantificando la señal a 8, 4, 3 y 2 bits (utiliza como valor de m el valor máximo en valor absoluto de y y cuantifica cada uno de los canales del audio). ¿A qué se debe el ruido que se escucha? ¿Se podría resolver este problema aumentando la frecuencia de muestreo?
+
+
+```{r}
+# y = readWave("p44100.wav")
+# 
+# x8 = quanti(y, 8, max(y))
+# 
+# x4 = quanti(y, 4, max(y))
+# 
+# x3 = quanti(y, 3, max(y))
+# 
+# x2 = quanti(y, 2, max(y))
+
+```
+
+
 
 ### 2.2.3. Opcional: Conversión D/A : Reconstructores
 En esta parte de la práctica nos concentraremos en los reconstructores.
