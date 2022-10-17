@@ -416,6 +416,52 @@ siendo data la señal original (un solo canal), N el número de bits (2N niveles
 
 1. _Efecto sobre las formas de onda_. Se estudiará el efecto de la cuantificación sobre el aspecto una sinusoide. Para ello genera tres períodos de una sinusoide de amplitud 4, frecuencia 50 Hz y frecuencia de muestreo 1000 Hz y cuantifica ésta suponiendo que el parámetro m = 5. Prueba para valores de 4 a 16 bits. Representa la señal de error de cuantificación en cada caso (señal formada por el error en cada una de las muestras). Prueba también a cuantificar la señal sinusoidal con una frecuencia de muestreo de 100 Hz y represéntala junto con la original.
 
+
+```{r}
+
+#Creación de la sinusoide:
+rm
+(list=ls())
+f1 = 50;
+T1 = 0.001 #Frecuencia de muestreo sinusoide (Hz)
+t = 0.05 # Periodo de muestreo 1 
+
+# Tiempo total de muestreo (s)
+ts1= seq(0,t,T1)
+x1 = sin(2*pi*f1*ts1)
+par(col="blue")
+plot(ts1,x1,type = "l")
+
+
+quanti <- function(data, N, m){
+ LSB <-m/((2^N)-1) 
+ 
+ dataout <- seq(from =0, to =0, length.out = length(data))
+  
+  for (i in 1:length(data)){
+    if (data[i] > m) {
+      dataout[i] = m
+    }
+    else{
+      dataout[i] <-(trunc(data[i]/LSB))*LSB
+    }
+  }
+  return(dataout)
+}
+
+
+
+xq = quanti(x1,4,5)
+
+plot(ts1,xq)
+
+
+
+#la señal cuantificada menos la real 
+```
+
+
+
 2. Efecto de la _cuantificación sobre una señal de audio_. Para ello vamos a utilizar el fichero p44100.wav. Lee dicho fichero con la instrucción y = readWave("p44100.wav") y escucha su contenido con play("p44100.wav. 
 
 Repite el proceso cuantificando la señal a 8, 4, 3 y 2 bits (utiliza como valor de m el valor máximo en valor absoluto de y y cuantifica cada uno de los canales del audio). ¿A qué se debe el ruido que se escucha? ¿Se podría resolver este problema aumentando la frecuencia de muestreo?
