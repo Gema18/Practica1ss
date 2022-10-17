@@ -170,6 +170,7 @@ par(new=T)
 par(col="black")
 plot(ts2,x2,type = "l")
 ####### HACER CON GGPLOT
+ggplot()+ geom_line(aes(x=ts2, y=x2))
 
 #Vuelve a representar las señales pero esta vez poniendo el eje X en segundos
 
@@ -349,8 +350,8 @@ Aplay es un ejemplo de software disponible en linux.
 #setWavPlayer("mplay32")
 #play("ce44100.wav")
 
-setWavPlayer("play")
-play("ce44100.wav") 
+#setWavPlayer("play")
+#play("ce44100.wav") 
 ```
 
 6. Vamos a simular un muestreo de la señal original a 22050 Hz y a 11025 Hz de la siguiente forma:
@@ -419,8 +420,6 @@ siendo data la señal original (un solo canal), N el número de bits (2N niveles
 
 1. _Efecto sobre las formas de onda_. Se estudiará el efecto de la cuantificación sobre el aspecto una sinusoide. Para ello genera tres períodos de una sinusoide de amplitud 4, frecuencia 50 Hz y frecuencia de muestreo 1000 Hz y cuantifica ésta suponiendo que el parámetro m = 5. Prueba para valores de 4 a 16 bits. Representa la señal de error de cuantificación en cada caso (señal formada por el error en cada una de las muestras). Prueba también a cuantificar la señal sinusoidal con una frecuencia de muestreo de 100 Hz y represéntala junto con la original.
 
-<<<<<<< HEAD
-=======
 
 ```{r}
 
@@ -436,7 +435,7 @@ ts1= seq(0,t,T1)
 x1 = sin(2*pi*f1*ts1)
 par(col="blue")
 plot(ts1,x1,type = "l")
-
+ggplot()+ geom_line(aes(x=ts1, y=x1))
 
 quanti <- function(data, N, m){
  LSB <-m/((2^N)-1) 
@@ -475,15 +474,14 @@ En cambio, si elegimos 16 bytes como argumento de la funcion, la señal queda ma
 
 Ahora para calcular el error es necesario restar la señal cuantificada a la real: 
 ```{r}
-
-Error: 
-
+length(xq)
+length(x1)
 ```
 
 
 
 
->>>>>>> de504d51bf175b85e57e8ba862654b290fa86a00
+
 2. Efecto de la _cuantificación sobre una señal de audio_. Para ello vamos a utilizar el fichero p44100.wav. Lee dicho fichero con la instrucción y = readWave("p44100.wav") y escucha su contenido con play("p44100.wav. 
 
 Repite el proceso cuantificando la señal a 8, 4, 3 y 2 bits (utiliza como valor de m el valor máximo en valor absoluto de y y cuantifica cada uno de los canales del audio). ¿A qué se debe el ruido que se escucha? ¿Se podría resolver este problema aumentando la frecuencia de muestreo?
