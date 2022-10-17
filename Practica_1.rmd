@@ -170,6 +170,7 @@ par(new=T)
 par(col="black")
 plot(ts2,x2,type = "l")
 ####### HACER CON GGPLOT
+ggplot()+ geom_line(aes(x=ts2, y=x2))
 
 #Vuelve a representar las señales pero esta vez poniendo el eje X en segundos
 
@@ -348,6 +349,9 @@ Aplay es un ejemplo de software disponible en linux.
 #setWavPlayer("mplay32/play")
 #setWavPlayer("mplay32")
 #play("ce44100.wav")
+
+#setWavPlayer("play")
+#play("ce44100.wav") 
 ```
 
 6. Vamos a simular un muestreo de la señal original a 22050 Hz y a 11025 Hz de la siguiente forma:
@@ -431,7 +435,7 @@ ts1= seq(0,t,T1)
 x1 = sin(2*pi*f1*ts1)
 par(col="blue")
 plot(ts1,x1,type = "l")
-
+ggplot()+ geom_line(aes(x=ts1, y=x1))
 
 quanti <- function(data, N, m){
  LSB <-m/((2^N)-1) 
@@ -452,9 +456,6 @@ quanti <- function(data, N, m){
 #Numero de bytes 2
 xq = quanti(x1,2,5)
 plot(ts1,xq)
-
-ggplot() 
-+geom_point(size = 4, aes(color=Species, shape = Species)) + geom_line()
 
 
 #Numero de bytes 4
@@ -477,12 +478,12 @@ Ahora para calcular el error es necesario restar la señal cuantificada a la rea
 if (length(x1) == length(xq)){
   error <- x1 - xq
   print(error)
-  ggplot()+ geom_line(aes(x = ts1, y = error))
+  ggplot() + geom_line(aes(x = ts1, y = error))
   
 }
   
-
 ```
+
 
 
 
