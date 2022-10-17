@@ -474,8 +474,7 @@ En cambio, si elegimos 16 bytes como argumento de la funcion, la señal queda ma
 
 Ahora para calcular el error es necesario restar la señal cuantificada a la real: 
 ```{r}
-length(xq)
-length(x1)
+
 ```
 
 
