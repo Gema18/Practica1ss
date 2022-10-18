@@ -324,13 +324,14 @@ y = readWave("ce44100.wav") #original
 Aplay es un ejemplo de software disponible en linux.
 
 ```{r}
-#findWavPlayer() 
-#setWavPlayer("aplay")
+sound::findWavPlayer() 
+sound::setWavPlayer("aplay")
+tuneR::play(y)
+
 #setWavPlayer("playwave")
 #setWavPlayer("mplay32/play")
 #setWavPlayer("mplay32")
 #play("ce44100.wav")
-
 #setWavPlayer("play")
 #play("ce44100.wav") 
 ```
@@ -339,9 +340,12 @@ Aplay es un ejemplo de software disponible en linux.
 y22050 = downsample(y,22050) y y11025 = downsample(y,11025). Escucha estas dos nuevas señales y comenta los resultados. Para oirlas deberás grabarlas en formato wav y reproducirlas con la función play("file.wav")
 
 ```{r}
-# y22050 = downsample(y,22050)
-# y11025 = downsample(y,11025)
-# 
+y22050 = downsample(y,22050)
+y11025 = downsample(y,11025)
+
+tuneR::play(y22050)
+tuneR::play(y11025)
+
 # savewav(wave=y22050, f=22050, filename = "y22050.wav", rescale = NULL) #De esta manera el audio se escucha con mas claridad 
 # 
 # savewav(wave=y11025, f=11025, filename = "y11025.wav", rescale = NULL)#Se escucha con menos claridad que el audio original pero con mas claridad respecto al audio anterior
@@ -366,7 +370,8 @@ v8000 = downsample(v,8000)
 
 #cambiando esta por 20 y 4:
 savewav(wave=v8000, f=20000, filename = "v20.wav", rescale = NULL)
-#play("v20.wav")
+v20 = readWave("v20.wav")
+tuneR::play(v20)
 
 savewav(wave=v8000, f=4000, filename = "v4.wav", rescale = NULL)
 #play("v4.wav")
