@@ -3,6 +3,12 @@ title: "Práctica I: Introducción a R y Conversión A/D y D/A"
 subtitle: "Señales y Sistemas, Grado en Ciencia de Datos - UV"
 author: "Sandra Paniagua Sánchez y Gema Bravo Aguilera"
 date:  "`r Sys.Date()`"  # Fecha del día actual
+header-includes: |
+      \usepackage{fancyhdr}
+      \pagestyle{fancy}
+      \fancyhead[RO,LE]{\includegraphics[width=186px]{universidad.png}}
+      \fancyhead[LO,LE]{ \textbf {Grado en Ciencia de Datos} \\\textbf {Prácticas de Señales y Sistemas }}
+
 output:
   # html_document:
   #   echo: yes
@@ -51,6 +57,7 @@ package.check <- lapply(packages, FUN=function(x) {
 search()
 ```
 
+\newpage
 
 # 1. Introducción a R
 
@@ -76,6 +83,9 @@ ggplot() + geom_point(aes(x, y), colour = "deeppink4", size = 3, shape = 18) +
 
 ```
 
+\newpage
+
+
 2. Calcular la media de la distribución anterior en x y en y.
 ```{r}
 media_x <- mean(x)
@@ -87,6 +97,9 @@ colnames(dimensiones) <- c ('media x', 'media y')
 dimensiones %>% kable() %>% kable_styling(full_width = F, position = "left")
 
 ```
+\hfill \break
+
+\hfill \break
 
 3. Realiza un script que realice las dos tareas anteriores. Llama a este script 
 HelloRWorld.R. El scrip debe iniciarse imprimiendo el texto "Hello R World".
@@ -98,12 +111,18 @@ if (palabra == "Hello R World") {
 }
 ```
 
+\hfill \break
+
+\hfill \break
+
 4. Combina los dos arrays (x e y) en una sola matriz, m. Puedes utilizar la 
 función rbind.
 
 ```{r}
 m <- rbind(x,y)
 ```
+
+\newpage
 
 5. Obtén una figura idéntica a la del ejercicio uno desde la matriz m.
 
@@ -115,18 +134,21 @@ ggplot() + geom_point(aes(m[1,], m[2,]), colour = "indianred3", size = 3, shape 
   theme_classic()
 ```
 
+\newpage
 
 6. Obtén un array aleatorio de 1000000 de elementos y representa su histograma. 
 Amplia el número de bines a 100.
 
 ```{r}
-ggplot() + geom_histogram(aes(array(rnorm(1000000))), bins = 100, fill = "indianred3", colour = "black") + 
+ggplot() + 
+  geom_histogram(aes(array(rnorm(1000000))), bins = 100, fill = "indianred3", colour = "black") + 
   xlab("Eje X")+ # eje x 
   ylab("Frecuencia")+ # eje y
   ggtitle("Histograma array aleatorio de 1000000 elementos")+ #título del gráfico
   theme_classic()
 
 ```
+\hfill \break
 
 7. Genera un array de 10 elementos, que comience en uno y se incremente en cinco. 
 Utilizar la función seq. Para obtener ayuda de la función puedes utilizar 
@@ -136,6 +158,7 @@ help(seq)
 array(seq(1,by = 5, length.out = 10)) 
 ```
 
+\newpage
 
 # 2. Conversión A/D: Muestreo
 
@@ -153,7 +176,7 @@ Calculamos el Periodo de muestreo:
 $Periodo \ de \ muestreo = \frac{1}{Fs}= \frac{1}{1000}= 0.001$
 
 
-```{r}
+```{r, out.width= 375}
 rm(list=ls())
 f1 = 250; # Frecuencia de la primera sinusoide (Hz)
 f2 = 500; # Frecuencia de la segunda sinusoide (Hz)
@@ -165,11 +188,9 @@ ts2= seq(0,t,T2);
 x1 = cos(2*pi*f1*ts1); # nos piden sinusoides 
 x2 = cos(2*pi*f2*ts2);
 
-ggplot() + geom_line(aes(x=ts2, y=x2)) + geom_line(aes(x=ts1, y=x1), color = "blue")+ theme_classic() +  
+ggplot() + geom_line(aes(x=ts2, y=x2)) + geom_line(aes(x=ts1, y=x1), color = "blue")+ 
+  theme_classic() +  
   ggtitle("Representación 2 sinusoides de 250 Hz y 500Hz")
-
-#Vuelve a representar las señales pero esta vez poniendo el eje X en segundos
-
 
 
 ```
@@ -206,10 +227,11 @@ ts2= seq(0,t,T2);
 x1 = cos(2*pi*f1*ts1);
 x2 = cos(2*pi*f2*ts2);
 
-ggplot() + geom_line(aes(x=ts2, y=x2)) + geom_line(aes(x=ts1, y=x1), color = "blue")+ theme_classic() +  
-  ggtitle("Representación 2 sinusoides de 150 Hz y 300Hz")
+ggplot() + geom_line(aes(x=ts2, y=x2)) + geom_line(aes(x=ts1, y=x1), color = "blue")+ 
+  theme_classic() + ggtitle("Representación 2 sinusoides de 150 Hz y 300Hz")
 
 ```
+\newpage
 
 Comprueba las siguientes combinaciones:
 
@@ -227,9 +249,11 @@ ts2= seq(0,t,T2);
 x1 = cos(2*pi*f1*ts1);
 x2 = cos(2*pi*f2*ts2);
 
-ggplot() + geom_line(aes(x=ts2, y=x2)) + geom_line(aes(x=ts1, y=x1), color = "blue")+ theme_classic() +  
+ggplot() + geom_line(aes(x=ts2, y=x2)) + geom_line(aes(x=ts1, y=x1), color = "blue") + 
+  theme_classic() +  
   ggtitle("Representación 2 sinusoides de 250 Hz y 500Hz")
 ```
+\newpage
 
 b) f1 = 250 Hz, f2 = 1250 Hz
 
@@ -244,11 +268,13 @@ ts1= seq(0,t,T1);
 ts2= seq(0,t,T2);
 x1 = cos(2*pi*f1*ts1);
 x2 = cos(2*pi*f2*ts2);
-ggplot() + geom_line(aes(x=ts2, y=x2)) + geom_line(aes(x=ts1, y=x1), color = "blue")+ theme_classic() +  
+ggplot() + geom_line(aes(x=ts2, y=x2)) + geom_line(aes(x=ts1, y=x1), color = "blue")+ 
+  theme_classic() +  
   ggtitle("Representación 2 sinusoides de 250 Hz y 1250 Hz")
 
 ```
 
+\newpage
 
 c) f1 = 1250 Hz, f2 = 5250 Hz 
 
@@ -263,10 +289,12 @@ ts1= seq(0,t,T1);
 ts2= seq(0,t,T2);
 x1 = cos(2*pi*f1*ts1);
 x2 = cos(2*pi*f2*ts2);
-ggplot() + geom_line(aes(x=ts2, y=x2)) + geom_line(aes(x=ts1, y=x1), color = "blue")+ theme_classic() +  
+ggplot() + geom_line(aes(x=ts2, y=x2)) + geom_line(aes(x=ts1, y=x1), color = "blue")+ 
+  theme_classic() +  
   ggtitle("Representación 2 sinusoides de 1250 Hz y 5250Hz")
 ```
 
+\newpage
 
 d) f1 = 0 Hz, f2 = 1000 Hz
 
@@ -281,7 +309,8 @@ ts1= seq(0,t,T1);
 ts2= seq(0,t,T2);
 x1 = cos(2*pi*f1*ts1);
 x2 = cos(2*pi*f2*ts2);
-ggplot() + geom_line(aes(x=ts2, y=x2)) + geom_line(aes(x=ts1, y=x1), color = "blue")+ theme_classic() +  
+ggplot() + geom_line(aes(x=ts2, y=x2)) + geom_line(aes(x=ts1, y=x1), color = "blue")+ 
+  theme_classic() +  
   ggtitle("Representación 2 sinusoides de 0 Hz y 1000Hz")
 
 ```
@@ -290,6 +319,7 @@ ggplot() + geom_line(aes(x=ts2, y=x2)) + geom_line(aes(x=ts1, y=x1), color = "bl
 
 La formulación más conocida del teorema de muestreo de Nyquist - Shannon es que para poder reconstruir una señal muestreada, la frecuencia de muestreo debe ser superior al doble del ancho de banda.
 
+\newpage
 
 ## 2.2. Laboratorio Conversión A/D: Muestreo
 ### 2.2.1. Aplicación práctica 1
@@ -325,10 +355,11 @@ Aplay es un ejemplo de software disponible en linux.
 
 ```{r}
 sound::findWavPlayer() 
-sound::setWavPlayer("aplay")
+#sound::setWavPlayer("aplay")
 tuneR::play(y)
 
 ```
+\newpage
 
 6. Vamos a simular un muestreo de la señal original a 22050 Hz y a 11025 Hz de la siguiente forma:
 y22050 = downsample(y,22050) y y11025 = downsample(y,11025). Escucha estas dos nuevas señales y comenta los resultados. Para oirlas deberás grabarlas en formato wav y reproducirlas con la función play("file.wav")
@@ -340,9 +371,12 @@ y11025 = downsample(y,11025)
 tuneR::play(y22050)
 tuneR::play(y11025)
 
-# savewav(wave=y22050, f=22050, filename = "y22050.wav", rescale = NULL) #De esta manera el audio se escucha con mas claridad 
+# savewav(wave=y22050, f=22050, filename = "y22050.wav", rescale = NULL) 
+# De esta manera el audio se escucha con mas claridad 
 # 
-# savewav(wave=y11025, f=11025, filename = "y11025.wav", rescale = NULL)#Se escucha con menos claridad que el audio original pero con mas claridad respecto al audio anterior
+# savewav(wave=y11025, f=11025, filename = "y11025.wav", rescale = NULL)
+# Se escucha con menos claridad que el audio original pero con mas claridad 
+# respecto al audio anterior
 # 
 # play("y22050.wav")
 # play("y11025.wav")
@@ -350,9 +384,9 @@ tuneR::play(y11025)
 ```
 
 
-SOLUCION:
+SOLUCIÓN:
 En el nuevo archivo de y22050.wav el audio se escucha con mas claridad.
-Y en el archivo y11025.wav el audio se escucha con menos definició respecto al anterior.
+Y en el archivo y11025.wav el audio se escucha con menos definición respecto al anterior.
 
 
 7. Utiliza ahora el fichero ce8000.wav y reproduce su contenido a la frecuencia a la que se ha muestreado, y cambiando ésta por ejemplo a 20 kHz y a 4 kHz (como en el ejemplo anterior). 
@@ -388,6 +422,7 @@ Cuano tengo la señal en el mundo digital y la quiero representar en el mundo re
 Es decir, la frecuencia de adquision y reconstruccion estan relacionadas con la calidad en la que se escuchará la señal y representarla.
 
 
+\newpage
 
 ### 2.2.2. Conversión A/D: Cuantificación
 En esta parte se analizarán los efectos de la cuantificación en la conversión analógica digital para ello vamos a utilizar la función quanti cuyos argumentos son los siguientes:
@@ -402,8 +437,7 @@ siendo data la señal original (un solo canal), N el número de bits (2N niveles
 ```{r}
 
 #Creación de la sinusoide:
-rm
-(list=ls())
+rm(list=ls())
 f1 = 50;
 T1 = 0.001 #Frecuencia de muestreo sinusoide (Hz)
 t = 0.05 # Periodo de muestreo 1 
@@ -414,6 +448,8 @@ x1 = sin(2*pi*f1*ts1)
 par(col='blue', col.axis='red', col.lab='orange',
     col.main='darkgreen', col.sub='purple', bty='n')
 plot(ts1,x1,type = "l")
+ggplot() + geom_line(aes(x=ts1, y=x1)) + 
+  theme_classic() 
 
 
 quanti <- function(data, N, m){
@@ -444,6 +480,10 @@ xq = quanti(x1,4,5)
 par(col='blue', col.axis='red', col.lab='orange',
     col.main='darkgreen', col.sub='purple', bty='n')
 plot(ts1,xq)
+ggplot() + geom_point(aes(x=ts1, y=xq)) + 
+  theme_classic() # CON GGPLOT CON PUNTOS
+ggplot() + geom_line(aes(x=ts1, y=xq)) + 
+  theme_classic() # CON GGPLOT CON LINEAS
 ```
 
 
@@ -460,6 +500,10 @@ par(col='blue', col.axis='red', col.lab='orange',
     col.main='darkgreen', col.sub='purple', bty='n')
 plot(ts1,xq)
 
+ggplot() + geom_point(aes(x=ts1, y=xq)) + 
+  theme_classic() # CON GGPLOT CON PUNTOS
+ggplot() + geom_line(aes(x=ts1, y=xq)) + 
+  theme_classic() # CON GGPLOT CON LINEAS
 
 ```
 En cambio, si elegimos 16 bytes como argumento de la funcion, la señal queda mas definida y se pierden menos puntos ya que el espacio queda dividido en mas segmentos por lo tanto la señal cuantificada, cuando redondee, redondeará hacia un numero mas cercano al real. 
@@ -493,25 +537,32 @@ y1 = y
 x8 = quanti(y@left, 8, max((abs(y@left))))
 y1@left = x8
 savewav(wave=y1, f=44100,filename = "x8.wav", rescale = NULL)
+x8 = readWave("x8.wav")
+tuneR::play(x8)
 
 x4 = quanti(y@left, 4, max((abs(y@left))))
 y1@left = x4
 savewav(wave=y1, f=44100,filename = "x4.wav", rescale = NULL)
+x4 = readWave("x4.wav")
+tuneR::play(x4)
 
 x3 = quanti(y@left, 3, max((abs(y@left))))
 y1@left = x3
 savewav(wave=y1, f=44100,filename = "x3.wav", rescale = NULL)
+x3 = readWave("x3.wav")
+tuneR::play(x3)
 
 x2 = quanti(y@left, 2, max((abs(y@left))))
 y1@left = x2
 savewav(wave=y1, f=44100,filename = "x2.wav", rescale = NULL)
-
+x2 = readWave("x2.wav")
+tuneR::play(x2)
 
 ```
 
-SOLUCION:
+SOLUCIÓN:
 
-El ruido que se escucha se debe a que se esta perdiendo informacion y por tanto la cancion pierde definicion y claridad. En primer lugar se pierden los tonos agudos. 
+El ruido que se escucha se debe a que se esta perdiendo información y por tanto la canción pierde definición y claridad. En primer lugar se pierden los tonos agudos. 
 
 
 
