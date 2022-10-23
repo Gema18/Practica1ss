@@ -328,12 +328,6 @@ sound::findWavPlayer()
 sound::setWavPlayer("aplay")
 tuneR::play(y)
 
-#setWavPlayer("playwave")
-#setWavPlayer("mplay32/play")
-#setWavPlayer("mplay32")
-#play("ce44100.wav")
-#setWavPlayer("play")
-#play("ce44100.wav") 
 ```
 
 6. Vamos a simular un muestreo de la señal original a 22050 Hz y a 11025 Hz de la siguiente forma:
@@ -367,6 +361,8 @@ Y en el archivo y11025.wav el audio se escucha con menos definició respecto al 
 ```{r}
 v = readWave("ce8000.wav")
 v8000 = downsample(v,8000)
+tuneR::play(v8000)
+
 
 #cambiando esta por 20 y 4:
 savewav(wave=v8000, f=20000, filename = "v20.wav", rescale = NULL)
@@ -374,7 +370,8 @@ v20 = readWave("v20.wav")
 tuneR::play(v20)
 
 savewav(wave=v8000, f=4000, filename = "v4.wav", rescale = NULL)
-#play("v4.wav")
+v4 = readWave("v4.wav")
+tuneR::play(v4)
 ```
 
 
@@ -385,17 +382,12 @@ Si elegimos mas frecuencia de adquisicion se representará con mas definición y
 El periodo de adquisicion, por otra parte, esta relacionado con la frecuencia de adquisision porque es su inversa.
 
 
-Cuano tengo la señal en el mundo digital y la quiero representar en el mundo real, utilizo los reconstructores. Que tambien tienen una frecuencia. (DIBUJO)
+Cuano tengo la señal en el mundo digital y la quiero representar en el mundo real, utilizo los reconstructores. Que tambien tienen una frecuencia. 
 
 
 Es decir, la frecuencia de adquision y reconstruccion estan relacionadas con la calidad en la que se escuchará la señal y representarla.
 
 
-HABRA QUE QUITAR ESTO EXPLICACION CLASE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-con downsample perdemos los tonos agudos
-filtro paso bajo 
-
-la cuantificación es la altura
 
 ### 2.2.2. Conversión A/D: Cuantificación
 En esta parte se analizarán los efectos de la cuantificación en la conversión analógica digital para ello vamos a utilizar la función quanti cuyos argumentos son los siguientes:
@@ -419,9 +411,10 @@ t = 0.05 # Periodo de muestreo 1
 # Tiempo total de muestreo (s)
 ts1= seq(0,t,T1)
 x1 = sin(2*pi*f1*ts1)
-par(col="blue")
+par(col='blue', col.axis='red', col.lab='orange',
+    col.main='darkgreen', col.sub='purple', bty='n')
 plot(ts1,x1,type = "l")
-ggplot()+ geom_line(aes(x=ts1, y=x1))
+
 
 quanti <- function(data, N, m){
  LSB <-m/((2^N)-1) 
@@ -439,21 +432,34 @@ quanti <- function(data, N, m){
   return(dataout)
 }
 
-#Numero de bytes 2
-xq = quanti(x1,2,5)
-plot(ts1,xq)
 
-
-#Numero de bytes 4
-xq = quanti(x1,4,5)
-plot(ts1,xq)
 
 ```
+Ahora vamos a probar la funcion con un rango de bytes para comparar.
+
+En este caso vamos a representarla con 4 bytes
+```{r}
+
+xq = quanti(x1,4,5)
+par(col='blue', col.axis='red', col.lab='orange',
+    col.main='darkgreen', col.sub='purple', bty='n')
+plot(ts1,xq)
+```
+
+
+
 Vemos que si le pasamos a la funcion quanti como numero de bytes 4, no dibuja la señal completa, es decir va perdiendo definicion puesto que esta nueva señal cuantificada redondeará a la baja y se perderán muchos valores. 
+
+
+Ahora si probamos con 16 bytes ocurre lo siguiente:
 
 ```{r}
 xq = quanti(x1,16,5)
+
+par(col='blue', col.axis='red', col.lab='orange',
+    col.main='darkgreen', col.sub='purple', bty='n')
 plot(ts1,xq)
+
 
 ```
 En cambio, si elegimos 16 bytes como argumento de la funcion, la señal queda mas definida y se pierden menos puntos ya que el espacio queda dividido en mas segmentos por lo tanto la señal cuantificada, cuando redondee, redondeará hacia un numero mas cercano al real. 
@@ -465,7 +471,7 @@ Ahora para calcular el error es necesario restar la señal cuantificada a la rea
 if (length(x1) == length(xq)){
   error <- x1 - xq
   ggplot() + geom_line(aes(x = ts1, y = error), color = "red", alpha = 0.2) + geom_point(aes(x = ts1, y = error), shape = 15) + 
-  xlab("ts1")+ ylab("erro")+ ggtitle("Representación del error con 16 bytes")+ theme_classic()
+  xlab("ts1")+ ylab("error")+ ggtitle("Representación del error con 16 bytes")+ theme_classic()
   
 }
 
@@ -485,30 +491,29 @@ y1 = y
 
 
 x8 = quanti(y@left, 8, max((abs(y@left))))
-
 y1@left = x8
-
 savewav(wave=y1, f=44100,filename = "x8.wav", rescale = NULL)
-
-
 
 x4 = quanti(y@left, 4, max((abs(y@left))))
 y1@left = x4
-
 savewav(wave=y1, f=44100,filename = "x4.wav", rescale = NULL)
 
 x3 = quanti(y@left, 3, max((abs(y@left))))
 y1@left = x3
-
 savewav(wave=y1, f=44100,filename = "x3.wav", rescale = NULL)
 
 x2 = quanti(y@left, 2, max((abs(y@left))))
 y1@left = x2
-
 savewav(wave=y1, f=44100,filename = "x2.wav", rescale = NULL)
 
 
 ```
+
+SOLUCION:
+
+El ruido que se escucha se debe a que se esta perdiendo informacion y por tanto la cancion pierde definicion y claridad. En primer lugar se pierden los tonos agudos. 
+
+
 
 
 
